@@ -8,8 +8,9 @@ export const todosSlice = createSlice({
         id: 1,
         title: 'Lorem ipsum sit dolar',
         completed: false
-      }
+      },
     ],
+    activeFilter: 'all',
   },
   reducers: {
     addTodo: (state, action) => {
@@ -24,9 +25,18 @@ export const todosSlice = createSlice({
       const { id } = action.payload;
       const filtered = state.items.filter(item => item.id !== id);
       state.items = filtered;
+    },
+    changeActiveFilter: (state, action) => {
+      state.activeFilter = action.payload;
+    },
+    clearCompleted: (state) => {
+      const filtered = state.items.filter(item => item.completed === false);
+      state.items = filtered;
     }
   }
 });
 
-export const { addTodo, toogle, destroy } = todosSlice.actions;
+export const selectTodos = (state) => state.items.todos; 
+
+export const { addTodo, toogle, destroy, changeActiveFilter, clearCompleted} = todosSlice.actions;
 export default todosSlice.reducer;
