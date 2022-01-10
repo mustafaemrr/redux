@@ -55,6 +55,16 @@ body {
 	color: #e6e6e6;
 }
 
+.todoapp form {
+	display: flex;
+	align-items: center;
+}
+
+.todoapp form img{
+	width: 35px;
+	padding: 0 10px;
+}
+
 .todoapp input::-moz-placeholder {
 	font-style: italic;
 	font-weight: 300;
