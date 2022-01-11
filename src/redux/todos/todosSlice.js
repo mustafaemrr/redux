@@ -16,6 +16,11 @@ export const toogleTodoAsync = createAsyncThunk('todos/toogleTodoAsync', async (
   return res.data;
 });
 
+export const removeTodoAsync = createAsyncThunk('todos/removeTodoAsync', async (id) => {
+  await axios.delete(`http://localhost:4000/todos/${id}`);
+  return id;
+});
+
 export const todosSlice = createSlice({
   name:'todos',
   initialState: {
@@ -67,6 +72,11 @@ export const todosSlice = createSlice({
       const { id, completed } = action.payload;
       const index = state.items.findIndex((item) => item.id === id);
       state.items[index].completed = completed;
+    },
+    [removeTodoAsync.fulfilled]: (state, action) => {
+      const  id = action.payload;
+      const index = state.items.findIndex((item) => item.id === id);
+      state.items.splice(index, 1);
     }
   }
 });
@@ -81,5 +91,5 @@ export const selectTodosFiltered = (state) => {
     state.todos.activeFilter === 'active' ? todo.completed === false : todo.completed === true)
 }
 
-export const { destroy, changeActiveFilter, clearCompleted} = todosSlice.actions;
+export const { changeActiveFilter, clearCompleted} = todosSlice.actions;
 export default todosSlice.reducer;
